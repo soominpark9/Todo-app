@@ -1,9 +1,9 @@
-"use strict";
+'use strict';
 
-const Sequelize = require("sequelize");
-const config = require(__dirname + "/../config/config.json")["development"];
+const Sequelize = require('sequelize');
+const config = require(__dirname + '/../config/config.json')['development'];
+
 const db = {};
-
 const sequelize = new Sequelize(
   config.database,
   config.username,
@@ -17,7 +17,7 @@ db.Sequelize = Sequelize;
 
 //db = {"sequelize" : sequelize, "sequelize": sequelize}
 
-db.Todo = require("./Todo")(sequelize, Sequelize);
+db.Todo = require('./Todo')(sequelize, Sequelize);
 //db = {"sequelize" : sequelize, "sequelize": sequelize, "Todo":model}
 //여기있는 model은 model: models/Todo.js에서 Todo가 반환하고 있는 model이 된다
 
