@@ -59,6 +59,11 @@ const App = () => {
     setTodoItems(result);
     console.log(targetItem);
   };
+
+  const updateItem = (changeItem) => {
+
+
+  }
   return (
     // AddTodo 컴포넌트 추가
     <div className="App">

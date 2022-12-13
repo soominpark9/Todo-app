@@ -21,7 +21,7 @@ const AddTodo = (props) => {
   };
   //enter키 입력시 아이디 추가
   const onEnterKeyPress = (e) => {
-    if (e.key == 'Enter') {
+    if (e.key === 'Enter') {
       onButtonClick();
     }
   };
