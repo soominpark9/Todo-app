@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 //사실 디비에서 데이터가져올거면 useRef 쓸 필요가 없다는...........?ㅎ
 import Todo from "./components/Todo";
 import AddTodo from "./components/AddTodo";
+import "./styles/App.scss";
 
 const App = () => {
   const [todoItems, setTodoItems] = useState([
@@ -60,21 +61,25 @@ const App = () => {
     console.log(targetItem);
   };
 
-  const updateItem = (changeItem) => {
-
-
-  }
+  // const updateItem = (changeItem) => {};
   return (
     // AddTodo 컴포넌트 추가
     <div className="App">
+      <header>😀Todo App</header>
       <AddTodo addItem={addItem} />
+      <div className="left-todos">🎇{todoItems.length} Todos</div>
+
       {/*AddTodo 에 props로 additem을 넘겨준다  */}
-      {todoItems.map((item) => {
-        // console.log(item); // {id: 1, title: 'My Todo1', done: false}
-        return <Todo key={item.id} item={item} deleteItem={deleteItem} />;
-        //deleteItem은 todo안에 있으니 여기서 보내줘야한다
-        //이제 여기서 Todo.js로 props를 넘겨준다 여기서 props는 item이다
-      })}
+      {todoItems.length > 0 ? (
+        todoItems.map((item) => {
+          // console.log(item); // {id: 1, title: 'My Todo1', done: false}
+          return <Todo key={item.id} item={item} deleteItem={deleteItem} />;
+          //deleteItem은 todo안에 있으니 여기서 보내줘야한다
+          //이제 여기서 Todo.js로 props를 넘겨준다 여기서 props는 item이다
+        })
+      ) : (
+        <p className="empty-todos">Todo를 추가해주세요🔥</p>
+      )}
     </div>
   );
 };

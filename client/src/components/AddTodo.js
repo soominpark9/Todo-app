@@ -1,6 +1,8 @@
 //1. 함수형 컴포넌트
 //2. input과 button을 가짐
 import { useState } from "react";
+import '../styles/AddTodo.scss';
+
 const AddTodo = (props) => {
   const { addItem } = props;
 //const { addItem } = props; 안쓰고 간략하게 하려면 위의props란에 바로 addItem을 넣으면됨

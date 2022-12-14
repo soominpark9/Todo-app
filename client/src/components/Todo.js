@@ -2,6 +2,7 @@
 //2. input(checkbox) 와 label을 랜더링하는 컴포넌트
 //3. App (부모 컴포넌트)에서 Todo (자식 컴포넌트) 1개를 랜더링한다.
 import { useState } from "react";
+import '../styles/Todo.scss'
 
 const Todo = ({ item, deleteItem }) => {
   //APP.JS에서 props를 가져옴
