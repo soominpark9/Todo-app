@@ -9,7 +9,7 @@ const Todo = ({ item, deleteItem }) => {
   // const {items,deleteItem} = props 하고 원래 (props) 해줘야하는데
   // props자리에 ( items,deleteItem를 넣어서 구조분해 할당 안해도됨
 
-  const { id, title, done } = item;
+  const { id, done } = item;
   const [todoItem, setTodoItem] = useState(item);
   const [readOnly, setReadOnly] = useState(true);
   //const { id, items, done } = items; 얘를 여기서 구조 분해 할당을 안하면
@@ -43,10 +43,14 @@ const Todo = ({ item, deleteItem }) => {
   };
   //checkbox 업데이트
   //done: true -> false, fasle -> true로 토글느낌으로
-  // const checkBoxEventHandler = () => {
-  //   todoItem.done = !todoItem.done; // !true -> false, !false -> true
-  //   setTodoItem(todoItem);
-  // };
+  const checkboxEventHandler = (e) => {
+    // rest: id, title 정보
+    const { done, ...rest } = todoItem; // { id: 1, title: 'todo1', done: false, }
+    setTodoItem({
+      done: e.target.checked,
+      ...rest,
+    });
+  };
 
   return (
     <div className="Todo">
@@ -57,6 +61,7 @@ const Todo = ({ item, deleteItem }) => {
         value={`todo${id}`}
         // onChange={checkBoxEventHandler}
         defaultChecked={done}
+        onChange={checkboxEventHandler}
       />
       {/* <label htmlFor={`todo${id}`}>{title}</label> */}
       <input
