@@ -18,6 +18,9 @@ const AddTodo = (props) => {
   //상태가 필요함
 
   const onButtonClick = () => {
+    if (todoItem.title.trim().length === 0) {
+      return;
+    }
     //props로 받아온 additem 함수 실행
     addItem(todoItem); //{title : 'input입력값'}
     //newItem으로 넘겨줌
@@ -37,6 +40,7 @@ const AddTodo = (props) => {
         value={todoItem.title}
         onChange={(e) => setTodoItem({ title: e.target.value })}
         onKeyPress={onEnterKeyPress}
+        autoFocus
       />
       <button onClick={onButtonClick}>
         <FontAwesomeIcon icon={faPlus} />
