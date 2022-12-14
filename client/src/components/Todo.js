@@ -2,6 +2,8 @@
 //2. input(checkbox) 와 label을 랜더링하는 컴포넌트
 //3. App (부모 컴포넌트)에서 Todo (자식 컴포넌트) 1개를 랜더링한다.
 import { useState } from "react";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import '../styles/Todo.scss'
 
 const Todo = ({ item, deleteItem }) => {
@@ -73,7 +75,7 @@ const Todo = ({ item, deleteItem }) => {
         onKeyPress={enterKeyEventHandler}
         readOnly={readOnly}
       />
-      <button onClick={onDeleteBtnClick}>DELETE</button>
+      <button onClick={onDeleteBtnClick}><FontAwesomeIcon icon={faTrashCan} /></button>
       {/* 여기서 Mytodo 가 데이터 받는 곳 -> react에서 데이터는 부모에서 -> 
       자식으로 흐르기때문에 부모요소인 app.js에 데이터를 받는다 */}
     </div>

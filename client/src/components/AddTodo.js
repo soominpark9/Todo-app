@@ -1,11 +1,13 @@
 //1. 함수형 컴포넌트
 //2. input과 button을 가짐
 import { useState } from "react";
-import '../styles/AddTodo.scss';
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "../styles/AddTodo.scss";
 
 const AddTodo = (props) => {
   const { addItem } = props;
-//const { addItem } = props; 안쓰고 간략하게 하려면 위의props란에 바로 addItem을 넣으면됨
+  //const { addItem } = props; 안쓰고 간략하게 하려면 위의props란에 바로 addItem을 넣으면됨
 
   //사용자 입력을 저장할 객체
   //(id, title, done에 대한 정보를 저장해야해서 객체 형태로 !!)
@@ -23,7 +25,7 @@ const AddTodo = (props) => {
   };
   //enter키 입력시 아이디 추가
   const onEnterKeyPress = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       onButtonClick();
     }
   };
@@ -36,7 +38,9 @@ const AddTodo = (props) => {
         onChange={(e) => setTodoItem({ title: e.target.value })}
         onKeyPress={onEnterKeyPress}
       />
-      <button onClick={onButtonClick}>ADD</button>
+      <button onClick={onButtonClick}>
+        <FontAwesomeIcon icon={faPlus} />
+      </button>
     </div>
   );
 };
