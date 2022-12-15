@@ -54,7 +54,6 @@ const App = () => {
     // newItem.done = false; //done 초기화
     // 기존 todoItems를 유지하고, 새로운 newItem을 추가
     // setTodoItems([...todoItems, newItem]);
-
     const response = await axios.post("http://localhost:8080/todo", newItem);
     console.log(response.data);
     //이 경로로 newItem이 날라간다.
@@ -65,7 +64,7 @@ const App = () => {
     //새로운 아이템: response.newItem
     //상태가 변경되면 랜더링이 된다는 것을 이용해서 아래코드를 씀
     //이거 쓰기 전까지는 todo를 추가해도 반영안되고 전체 흰 페이지만 나왔음
-    setTodoItems([...todoItems, response.newItem]);
+    setTodoItems([...todoItems, response.data]);
   };
   //전체 Todo 리스트(todoItems)는 App 컴포넌트에서 관리하고 있으므로
   //delete() 함수는 App 컴포넌트에 작성해야함
@@ -84,12 +83,23 @@ const App = () => {
     //대신 (todoItem) =>여기가 다른걸로 바뀌면 !== todoItem.id 여기도 todoItem이 아닌 바뀐 값을 넣어줘야함
     //todo.js 파일의 delete부분이랑 왔다갔따함
     console.log(targetItem);
-    
-    
-    const newTodoItems = todoItems.filter(
-      (todoItem) => targetItem.id !== todoItem.id
-      );
-      setTodoItems(newTodoItems);
+
+    let newTodoItems = todoItems.filter((item) => item.id !== targetItem.id);
+    setTodoItems(newTodoItems);
+    //얘가 filter밑에있어야 작동 얘가 위로가면 오류남
+  };
+
+  // API를 이용해서 update하려면
+  // (1) server/routes/todo.js API를 이용해 서버 데이터를 업데이트 한 후
+  // (2) 변경된 내용을 화면에 다시 출력하는 작업
+  const updateItem = async (targetItem) => {
+    console.log(targetItem);
+
+    //axios fetch는 url이랑 data를 가져와야함 (url,data)
+    await axios.patch(
+      `http://localhost:8080/todo/${targetItem.id}`,
+      targetItem
+    );
   };
 
   // const updateItem = (changeItem) => {};
@@ -104,7 +114,14 @@ const App = () => {
       {todoItems.length > 0 ? (
         todoItems.map((item) => {
           // console.log(item); // {id: 1, title: 'My Todo1', done: false}
-          return <Todo key={item.id} item={item} deleteItem={deleteItem} />;
+          return (
+            <Todo
+              key={item.id}
+              item={item}
+              deleteItem={deleteItem}
+              updateItem={updateItem}
+            />
+          );
           //deleteItem은 todo안에 있으니 여기서 보내줘야한다
           //이제 여기서 Todo.js로 props를 넘겨준다 여기서 props는 item이다
         })

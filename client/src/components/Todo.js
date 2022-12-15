@@ -4,9 +4,9 @@
 import { useState } from "react";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import '../styles/Todo.scss'
+import "../styles/Todo.scss";
 
-const Todo = ({ item, deleteItem }) => {
+const Todo = ({ item, deleteItem, updateItem }) => {
   //APP.JS에서 props를 가져옴
   //console.log(items) -{id:1, title: 'todo1', true}
   // const {items,deleteItem} = props 하고 원래 (props) 해줘야하는데
@@ -31,6 +31,7 @@ const Todo = ({ item, deleteItem }) => {
       ...rest,
       //...rest를 썼기 때문에 title제외 나머지 정보가 다 저기 함축되어있어서 반영된다
     });
+    // updateItem(); //힌트1 변경될 대상이 들어가야한다
   };
 
   //title input 클릭시 : readOnly state를 false로 변경
@@ -42,6 +43,8 @@ const Todo = ({ item, deleteItem }) => {
   const enterKeyEventHandler = (e) => {
     if (e.key === "Enter") {
       setReadOnly(true);
+      updateItem(todoItem); //엔터키를 누르는 순간 변경되도록  변경 헨들러 있는 곳에 해야함 그 동작 할때 변화해야 하니까
+      //stat 활용하면 됨
     }
   };
   //checkbox 업데이트
@@ -49,10 +52,12 @@ const Todo = ({ item, deleteItem }) => {
   const checkboxEventHandler = (e) => {
     // rest: id, title 정보
     const { done, ...rest } = todoItem; // { id: 1, title: 'todo1', done: false, }
-    setTodoItem({
+    const updatedItem = {
       done: e.target.checked,
       ...rest,
-    });
+    };
+    setTodoItem(updatedItem);
+    updateItem(updatedItem); //tnwjd2 --> 변경될 대상 --> 체크박스 선택시 변경      //stat 활용하면 됨
   };
 
   return (
@@ -75,7 +80,9 @@ const Todo = ({ item, deleteItem }) => {
         onKeyPress={enterKeyEventHandler}
         readOnly={readOnly}
       />
-      <button onClick={onDeleteBtnClick}><FontAwesomeIcon icon={faTrashCan} /></button>
+      <button onClick={onDeleteBtnClick}>
+        <FontAwesomeIcon icon={faTrashCan} />
+      </button>
       {/* 여기서 Mytodo 가 데이터 받는 곳 -> react에서 데이터는 부모에서 -> 
       자식으로 흐르기때문에 부모요소인 app.js에 데이터를 받는다 */}
     </div>
