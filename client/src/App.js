@@ -1,27 +1,30 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 //사실 디비에서 데이터가져올거면 useRef 쓸 필요가 없다는...........?ㅎ
+import axios from "axios";
 import Todo from "./components/Todo";
 import AddTodo from "./components/AddTodo";
 import "./styles/App.scss";
 
 const App = () => {
   const [todoItems, setTodoItems] = useState([
-    {
-      id: 1,
-      title: "My Todo1",
-      done: false,
-    },
-    {
-      id: 2,
-      title: "My Todo2",
-      done: false,
-    },
-    {
-      id: 3,
-      title: "My Todo3",
-      done: true,
-    },
+ //써둔 임시 배열 지움 이제 데이터 넣을것
   ]);
+  useEffect(() => {
+    //처음랜더링될때만 함수안에있는 작업을함
+    console.log("첫 랜더링 완료!");
+
+    const getTodos = async() => {
+      let response = await axios.get("http://localhost:8080/todos");
+      //백으로(todos) 가는 작업은 시간이 걸리기에 어싱크 어웨이트를 해준다  모든 요청을 result라는 변수에 전달 받은것
+      //todo.js에 try부분이 실행이 되는 것 그게 문제 없음 이제 실행 되는것
+      console.log(response.data);
+      setTodoItems(response.data)
+      //위에 state를 가져와서 상태를 바꿔주려고 함 
+      //> back api를 요청함 -> 상태를 바꿈 그래서 다시한번 랜더링됨 
+    };
+    getTodos();
+    //실행
+  }, []);
 
   const todoId = useRef(4);
   //todoId를 useRef로 관리하기 위해서 썼는데 useRef는 dom요소 접근뿐만아니라
